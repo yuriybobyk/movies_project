@@ -4,7 +4,7 @@ import {Header} from "../../components";
 
 const MainLayout = () => {
     return (
-        <div>
+        <div className="relative h-[140vh]">
             <Header/>
             <Outlet/>
         </div>
