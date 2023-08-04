@@ -13,7 +13,7 @@ const MovieCard:FC<IProps> = ({movie}) => {
     const getPoster =`${posterURL}${poster_path}`
 
     return (
-        <div className="w-[320px]  ">
+        <div className="w-[360px]  ">
             <img src={getPoster} alt={title}/>
         </div>
     );

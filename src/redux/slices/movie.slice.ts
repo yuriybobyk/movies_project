@@ -37,10 +37,11 @@ const getMovieInfo = createAsyncThunk<IMovie, number>(
 )
 
 const getMovies = createAsyncThunk<IMovieData, { page: string }>(
-    'movieSlice',
+    'movieSlice/getMovies',
     async ({page}, {rejectWithValue}) => {
         try {
             const {data} = await movieService.getMovies(page)
+            await new Promise(resolve => setTimeout(resolve, 600))
             return data
         } catch (e) {
             const err = e as AxiosError
