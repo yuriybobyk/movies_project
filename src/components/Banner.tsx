@@ -1,10 +1,20 @@
-import React from 'react';
-import {useAppSelector} from "../hooks";
+import React, {useEffect} from 'react';
+import {useAppDispatch, useAppSelector} from "../hooks";
+import {movieActions} from "../redux";
 
 const Banner = () => {
 
     const {movieInfo} = useAppSelector(state => state.movieReducer)
-    console.log(movieInfo.id)
+
+    const dispatch = useAppDispatch();
+
+    useEffect(()=>{
+
+        const movieId= 447277
+        dispatch(movieActions.getMovieInfo(movieId))
+        console.log(movieInfo)
+    },[dispatch])
+
     return (
         <div>
 

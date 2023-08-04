@@ -1,5 +1,5 @@
 import {IMovie} from "../../interfaces/movie.interface";
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, isFulfilled, isPending} from "@reduxjs/toolkit";
 import {movieService} from "../../services";
 import {AxiosError} from "axios";
 import {IMovieData} from "../../interfaces/movie.data";
@@ -10,6 +10,7 @@ interface IState {
     total_pages: number;
     moviesByGenre: IMovie[];
     movieInfo: IMovie;
+    loading: boolean;
 
 }
 
@@ -19,6 +20,7 @@ const initialState: IState = {
     total_pages: null,
     moviesByGenre: [],
     movieInfo: null,
+    loading: false
 }
 
 const getMovieInfo = createAsyncThunk<IMovie, number>(
@@ -61,6 +63,12 @@ const slice = createSlice({
                 state.movies = results;
                 state.page = page;
                 state.total_pages = total_pages;
+            })
+            .addMatcher(isPending(), state => {
+                state.loading = true
+            })
+            .addMatcher(isFulfilled(), state => {
+                state.loading = false
             })
 })
 

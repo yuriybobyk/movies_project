@@ -1,12 +1,18 @@
 import {IRes} from "../types";
-import {IMovie} from "../interfaces/movie.interface";
+
 import {axiosService} from "./axios.service";
 import {movieEndPoints} from "../constants";
 import {IMovieData} from "../interfaces/movie.data";
+import {IMovie} from "../interfaces/movie.interface";
 
-const movieService = {
-    getMovies: (page: string):IRes<IMovieData> =>axiosService.get(movieEndPoints.movies, {params: {page}}),
-    getMovieInfo: (id:number): IRes<IMovie> =>axiosService.get(`${movieEndPoints.movieInfo}/${id}`)
+class MovieService {
+    getMovies(page: string): IRes<IMovieData> {
+        return axiosService.get(`${movieEndPoints.movies}`, {params: {page}})
+    }
+
+     getMovieInfo(id:number): IRes<IMovie>{
+        return axiosService.get(`${movieEndPoints.movieInfo}/${id}`)
+    }
 }
 
-export {movieService}
+export const movieService = new MovieService()
