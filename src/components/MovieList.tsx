@@ -18,7 +18,6 @@ const MovieList = () => {
         dispatch(movieActions.getMovies({page: choosenPage}))
     }, [dispatch, choosenPage])
 
-    console.log(movies)
 
     const CustomPagination = styled(Pagination)(({theme}) => ({
         '& .MuiPaginationItem-root': {
@@ -28,10 +27,10 @@ const MovieList = () => {
             backgroundColor: 'red',
         },
         '& .MuiPaginationItem-page.Mui-selected:hover': {
-            backgroundColor: 'darkred', // Set a different hover color for the selected page
+            backgroundColor: 'darkred',
         },
         '& .MuiPaginationItem-page:hover': {
-            backgroundColor: 'lightcoral', // Set a different hover color for non-selected pages
+            backgroundColor: 'lightcoral',
         },
     }));
 
