@@ -1,6 +1,7 @@
 const baseMovieURL = 'https://api.themoviedb.org/3';
 
 const posterURL = 'https://image.tmdb.org/t/p/w500'
+const backDropURL = 'https://image.tmdb.org/t/p/original'
 
 const movieEndPoints = {
     movies: '/discover/movie',
@@ -8,4 +9,4 @@ const movieEndPoints = {
     trending: '/trending/all/week?'
 }
 
-export {baseMovieURL, movieEndPoints, posterURL}
+export {baseMovieURL, movieEndPoints, posterURL, backDropURL}
