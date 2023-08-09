@@ -13,6 +13,9 @@ class MovieService {
      getMovieInfo(id:number): IRes<IMovie>{
         return axiosService.get(`${movieEndPoints.movieInfo}/${id}`)
     }
+    getNewPopular(page:string):IRes<IMovieData>{
+        return axiosService.get(`${movieEndPoints.newPopular}`,{params:{page}})
+    }
 }
 
 export const movieService = new MovieService()

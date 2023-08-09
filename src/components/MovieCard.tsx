@@ -4,11 +4,12 @@ import {posterURL} from "../constants";
 
 interface IProps{
     movie: IMovie
+
 }
 
 const MovieCard:FC<IProps> = ({movie}) => {
 
-    const {backdrop_path, poster_path, title} = movie
+    const {poster_path, title} = movie
 
     const getPoster =`${posterURL}${poster_path}`
 

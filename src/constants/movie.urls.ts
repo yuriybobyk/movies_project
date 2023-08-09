@@ -6,7 +6,8 @@ const backDropURL = 'https://image.tmdb.org/t/p/original'
 const movieEndPoints = {
     movies: '/discover/movie',
     movieInfo: '/movie',
-    trending: '/trending/all/week?'
+    trending: '/trending/all/week?',
+    newPopular: 'trending/movie/day'
 }
 
 export {baseMovieURL, movieEndPoints, posterURL, backDropURL}

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Route, Routes} from "react-router-dom";
 import {MainLayout} from "./layouts/MainLayout";
-import {HomePage, MoviesPage} from "./Pages";
+import {HomePage, MoviesPage, NewPopularPage} from "./Pages";
 
 
 function App() {
@@ -10,6 +10,7 @@ function App() {
             <Route path={'/'} element={<MainLayout/>}>
                 <Route index element={<HomePage/>}/>
                 <Route path={'/movies'} element={<MoviesPage/>}/>
+                <Route path={'/new&popular'} element={<NewPopularPage/>}/>
             </Route>
       </Routes>
   );

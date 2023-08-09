@@ -33,10 +33,10 @@ const Header = () => {
                      className="cursor-pointer object-contain" alt={'netflix'}/>
                 <Menu/>
                 <ul className="hidden space-x-4 md:flex">
-                    <Link to={'/home'} className="headerLink">Home</Link>
+                    <Link to={'/'} className="headerLink">Home</Link>
                     <li className="headerLink">TV Shows</li>
                     <Link to={'/movies'} className="headerLink">Movies</Link>
-                    <li className="headerLink">New & Popular</li>
+                    <Link to={'/new&popular'} className="headerLink">New & Popular</Link>
                     <li className="headerLink">My List</li>
                 </ul>
             </div>

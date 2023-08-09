@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from "../hooks";
 import {movieActions} from "../redux";
-import {backDropURL, posterURL} from "../constants";
+import {backDropURL} from "../constants";
 import {IMovie} from "../interfaces/movie.interface";
 import {FaPlay} from "react-icons/fa";
 import {InformationCircleIcon} from "@heroicons/react/solid";

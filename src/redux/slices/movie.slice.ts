@@ -11,6 +11,7 @@ interface IState {
     moviesByGenre: IMovie[];
     movieInfo: IMovie;
     loading: boolean;
+    newPopularMovies: IMovie[];
 
 }
 
@@ -20,7 +21,8 @@ const initialState: IState = {
     total_pages: null,
     moviesByGenre: [],
     movieInfo: null,
-    loading: false
+    loading: false,
+    newPopularMovies: []
 }
 
 const getMovieInfo = createAsyncThunk<IMovie, number>(
@@ -50,6 +52,19 @@ const getMovies = createAsyncThunk<IMovieData, { page: string }>(
     }
 )
 
+const getNewPopular = createAsyncThunk<IMovieData, {page:string}>(
+    'movieSlice/getNewPopular',
+    async ({page}, {rejectWithValue})=>{
+        try {
+            const {data} = await movieService.getNewPopular(page)
+            return data
+        }catch (e){
+            const err = e as AxiosError
+            return rejectWithValue(err.response.data)
+        }
+    }
+)
+
 const slice = createSlice({
     name: 'movieSlice',
     initialState,
@@ -65,6 +80,12 @@ const slice = createSlice({
                 state.page = page;
                 state.total_pages = total_pages;
             })
+            .addCase(getNewPopular.fulfilled, (state, action)=>{
+                const {results, page, total_pages} = action.payload;
+                state.newPopularMovies = results;
+                state.page = page;
+                state.total_pages = total_pages
+            })
             .addMatcher(isPending(), state => {
                 state.loading = true
             })
@@ -78,7 +99,8 @@ const {reducer: movieReducer, actions} = slice;
 const movieActions = {
     ...actions,
     getMovies,
-    getMovieInfo
+    getMovieInfo,
+    getNewPopular
 }
 
 export {movieActions, movieReducer}
