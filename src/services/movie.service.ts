@@ -25,6 +25,9 @@ class MovieService {
     getTrending(page:string):IRes<IMovieData>{
         return axiosService.get(`${movieEndPoints.trending}`, {params:{page}})
     }
+    getTopRatedMovies(page:string):IRes<IMovieData>{
+        return axiosService.get(`${movieEndPoints.topRated}`, {params:{page}})
+    }
 }
 
 export const movieService = new MovieService()
