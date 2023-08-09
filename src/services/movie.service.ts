@@ -19,6 +19,12 @@ class MovieService {
     getTvShows(page:string):IRes<IMovieData>{
         return axiosService.get(`${movieEndPoints.tv}`, {params:{page}})
     }
+    getNowPlaying(page:string):IRes<IMovieData>{
+        return axiosService.get(`${movieEndPoints.nowPlaying}`, {params:{page}})
+    }
+    getTrending(page:string):IRes<IMovieData>{
+        return axiosService.get(`${movieEndPoints.trending}`, {params:{page}})
+    }
 }
 
 export const movieService = new MovieService()

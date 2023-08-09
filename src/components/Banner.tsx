@@ -26,10 +26,6 @@ const Banner = () => {
         }
     }, [movies])
 
-
-    console.log(movies)
-
-
     return (
         <div>
             {movie && (

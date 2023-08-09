@@ -5,4 +5,6 @@ export * from './New&Popular';
 export * from './MovieCard';
 export * from './MovieList';
 export * from './TvShows';
-export * from './Row';
+export * from './NowPalyingRow';
+export * from './RowElement';
+export * from './TrendingRow';

@@ -13,6 +13,8 @@ interface IState {
     loading: boolean;
     newPopularMovies: IMovie[];
     tvShows: IMovie[];
+    nowPlaying: IMovie[];
+    trending: IMovie[];
 
 }
 
@@ -24,7 +26,9 @@ const initialState: IState = {
     movieInfo: null,
     loading: false,
     newPopularMovies: [],
-    tvShows: []
+    tvShows: [],
+    nowPlaying: [],
+    trending: []
 }
 
 const getMovieInfo = createAsyncThunk<IMovie, number>(
@@ -54,26 +58,52 @@ const getMovies = createAsyncThunk<IMovieData, { page: string }>(
     }
 )
 
-const getNewPopular = createAsyncThunk<IMovieData, {page:string}>(
+const getNewPopular = createAsyncThunk<IMovieData, { page: string }>(
     'movieSlice/getNewPopular',
-    async ({page}, {rejectWithValue})=>{
+    async ({page}, {rejectWithValue}) => {
         try {
             const {data} = await movieService.getNewPopular(page)
             return data
-        }catch (e){
+        } catch (e) {
             const err = e as AxiosError
             return rejectWithValue(err.response.data)
         }
     }
 )
 
-const getTvShows = createAsyncThunk<IMovieData, {page:string}>(
+const getTvShows = createAsyncThunk<IMovieData, { page: string }>(
     'movieSlice/getTvShows',
-    async ({page}, {rejectWithValue})=>{
+    async ({page}, {rejectWithValue}) => {
         try {
             const {data} = await movieService.getTvShows(page)
             return data
-        }catch (e) {
+        } catch (e) {
+            const err = e as AxiosError
+            return rejectWithValue(err.response.data)
+        }
+    }
+)
+
+const getNowPlaying = createAsyncThunk<IMovieData, { page: string }>(
+    'movieSlice/getNowPlaying',
+    async ({page}, {rejectWithValue}) => {
+        try {
+            const {data} = await movieService.getNowPlaying(page)
+            return data
+        } catch (e) {
+            const err = e as AxiosError
+            return rejectWithValue(err.response.data)
+        }
+    }
+)
+
+const getTrending = createAsyncThunk<IMovieData, { page: string }>(
+    'movieSlice/getTrending',
+    async ({page}, {rejectWithValue}) => {
+        try {
+            const {data} = await movieService.getTrending(page)
+            return data
+        } catch (e) {
             const err = e as AxiosError
             return rejectWithValue(err.response.data)
         }
@@ -95,15 +125,27 @@ const slice = createSlice({
                 state.page = page;
                 state.total_pages = total_pages;
             })
-            .addCase(getNewPopular.fulfilled, (state, action)=>{
+            .addCase(getNewPopular.fulfilled, (state, action) => {
                 const {results, page, total_pages} = action.payload;
                 state.newPopularMovies = results;
                 state.page = page;
                 state.total_pages = total_pages
             })
-            .addCase(getTvShows.fulfilled, (state, action)=>{
+            .addCase(getTvShows.fulfilled, (state, action) => {
                 const {results, page, total_pages} = action.payload;
                 state.tvShows = results;
+                state.page = page;
+                state.total_pages = total_pages;
+            })
+            .addCase(getNowPlaying.fulfilled, (state, action) => {
+                const {results, page, total_pages} = action.payload;
+                state.nowPlaying = results;
+                state.page = page;
+                state.total_pages = total_pages
+            })
+            .addCase(getTrending.fulfilled, (state, action) => {
+                const {results, page, total_pages} = action.payload;
+                state.trending = results;
                 state.page = page;
                 state.total_pages = total_pages;
             })
@@ -122,7 +164,9 @@ const movieActions = {
     getMovies,
     getMovieInfo,
     getNewPopular,
-    getTvShows
+    getTvShows,
+    getNowPlaying,
+    getTrending
 }
 
 export {movieActions, movieReducer}
