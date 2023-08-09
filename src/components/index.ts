@@ -4,3 +4,4 @@ export * from './Banner';
 export * from './New&Popular';
 export * from './MovieCard';
 export * from './MovieList';
+export * from './TvShows';

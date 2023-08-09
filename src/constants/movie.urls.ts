@@ -7,7 +7,8 @@ const movieEndPoints = {
     movies: '/discover/movie',
     movieInfo: '/movie',
     trending: '/trending/all/week?',
-    newPopular: 'trending/movie/day'
+    newPopular: 'trending/movie/day',
+    tv: '/discover/tv'
 }
 
 export {baseMovieURL, movieEndPoints, posterURL, backDropURL}

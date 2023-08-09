@@ -34,7 +34,7 @@ const Header = () => {
                 <Menu/>
                 <ul className="hidden space-x-4 md:flex">
                     <Link to={'/'} className="headerLink">Home</Link>
-                    <li className="headerLink">TV Shows</li>
+                    <Link to={'/tvshows'} className="headerLink">TV Shows</Link>
                     <Link to={'/movies'} className="headerLink">Movies</Link>
                     <Link to={'/new&popular'} className="headerLink">New & Popular</Link>
                     <li className="headerLink">My List</li>
