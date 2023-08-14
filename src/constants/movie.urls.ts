@@ -10,7 +10,8 @@ const movieEndPoints = {
     newPopular: 'trending/movie/day',
     tv: '/discover/tv',
     nowPlaying: '/movie/now_playing',
-    topRated: 'movie/top_rated'
+    topRated: 'movie/top_rated',
+    genres: '/genre/movie/list'
 }
 
 export {baseMovieURL, movieEndPoints, posterURL, backDropURL}

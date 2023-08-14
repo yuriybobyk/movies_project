@@ -4,29 +4,39 @@ import {axiosService} from "./axios.service";
 import {movieEndPoints} from "../constants";
 import {IMovieData} from "../interfaces/movie.data";
 import {IMovie} from "../interfaces/movie.interface";
+import {IGenre} from "../interfaces/genre.interface";
 
 class MovieService {
     getMovies(page: string): IRes<IMovieData> {
         return axiosService.get(`${movieEndPoints.movies}`, {params: {page}})
     }
 
-     getMovieInfo(id:number): IRes<IMovie>{
+    getMovieInfo(id: number): IRes<IMovie> {
         return axiosService.get(`${movieEndPoints.movieInfo}/${id}`)
     }
-    getNewPopular(page:string):IRes<IMovieData>{
-        return axiosService.get(`${movieEndPoints.newPopular}`,{params:{page}})
+
+    getNewPopular(page: string): IRes<IMovieData> {
+        return axiosService.get(`${movieEndPoints.newPopular}`, {params: {page}})
     }
-    getTvShows(page:string):IRes<IMovieData>{
-        return axiosService.get(`${movieEndPoints.tv}`, {params:{page}})
+
+    getTvShows(page: string): IRes<IMovieData> {
+        return axiosService.get(`${movieEndPoints.tv}`, {params: {page}})
     }
-    getNowPlaying(page:string):IRes<IMovieData>{
-        return axiosService.get(`${movieEndPoints.nowPlaying}`, {params:{page}})
+
+    getNowPlaying(page: string): IRes<IMovieData> {
+        return axiosService.get(`${movieEndPoints.nowPlaying}`, {params: {page}})
     }
-    getTrending(page:string):IRes<IMovieData>{
-        return axiosService.get(`${movieEndPoints.trending}`, {params:{page}})
+
+    getTrending(page: string): IRes<IMovieData> {
+        return axiosService.get(`${movieEndPoints.trending}`, {params: {page}})
     }
-    getTopRatedMovies(page:string):IRes<IMovieData>{
-        return axiosService.get(`${movieEndPoints.topRated}`, {params:{page}})
+
+    getTopRatedMovies(page: string): IRes<IMovieData> {
+        return axiosService.get(`${movieEndPoints.topRated}`, {params: {page}})
+    }
+
+    getGenres(): IRes<IGenre> {
+        return axiosService.get(`${movieEndPoints.genres}`)
     }
 }
 
