@@ -38,9 +38,9 @@ const Header = () => {
         <header className={`${isScrolled && 'bg-[#141414]'}`}>
             <div className="flex items-center space-x-2 md: space-x-10">
                 {isMenuOpen ? <div>
-                        <div className="w-6 h-6"/>
+                        <div className="w-8 h-8"/>
                         <LeftMenu isOpen={isMenuOpen} onClose={closeMenu}/></div> :
-                    <MenuIcon onClick={toggleMenu} className="h-6 w-6 cursor-pointer"/>}
+                    <MenuIcon onClick={toggleMenu} className="h-8 w-8 cursor-pointer"/>}
                 <img src="https://rb.gy/ulxxee"
                      width={100}
                      height={100}
