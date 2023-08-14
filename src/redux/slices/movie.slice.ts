@@ -207,7 +207,8 @@ const movieActions = {
     getTvShows,
     getNowPlaying,
     getTrending,
-    getTopRatedMovies
+    getTopRatedMovies,
+    getGenresList
 }
 
 export {movieActions, movieReducer}

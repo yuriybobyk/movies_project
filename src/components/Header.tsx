@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {Menu} from "./Menu";
-import {BellIcon, SearchIcon} from "@heroicons/react/solid";
+import {BellIcon, MenuIcon, SearchIcon} from "@heroicons/react/solid";
 import {Link} from "react-router-dom";
+import {LeftMenu} from "./LeftMenu";
 
 
 const Header = () => {
 
     const [isScrolled, setIsScrolled] = useState(false)
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
 
     useEffect(() => {
         const handleScroll = () => {
@@ -24,9 +26,21 @@ const Header = () => {
         }
     }, [])
 
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
+    const closeMenu = () => {
+        setIsMenuOpen(false)
+    }
+
     return (
         <header className={`${isScrolled && 'bg-[#141414]'}`}>
             <div className="flex items-center space-x-2 md: space-x-10">
+                {isMenuOpen ? <div>
+                        <div className="w-6 h-6"/>
+                        <LeftMenu isOpen={isMenuOpen} onClose={closeMenu}/></div> :
+                    <MenuIcon onClick={toggleMenu} className="h-6 w-6 cursor-pointer"/>}
                 <img src="https://rb.gy/ulxxee"
                      width={100}
                      height={100}

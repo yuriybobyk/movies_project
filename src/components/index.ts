@@ -9,3 +9,4 @@ export * from './NowPalyingRow';
 export * from './RowElement';
 export * from './TrendingRow';
 export * from './TopRatedRow';
+export * from './LeftMenu';
