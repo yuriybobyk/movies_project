@@ -4,7 +4,7 @@ import {axiosService} from "./axios.service";
 import {movieEndPoints} from "../constants";
 import {IMovieData} from "../interfaces/movie.data";
 import {IMovie} from "../interfaces/movie.interface";
-import {IGenre} from "../interfaces/genre.interface";
+import {AxiosResponse} from "axios";
 
 class MovieService {
     getMovies(page: string): IRes<IMovieData> {
@@ -35,7 +35,7 @@ class MovieService {
         return axiosService.get(`${movieEndPoints.topRated}`, {params: {page}})
     }
 
-    getGenres(): IRes<IGenre> {
+    getGenres(): Promise<AxiosResponse> {
         return axiosService.get(`${movieEndPoints.genres}`)
     }
 }

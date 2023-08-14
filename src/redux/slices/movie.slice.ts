@@ -3,6 +3,7 @@ import {createAsyncThunk, createSlice, isFulfilled, isPending} from "@reduxjs/to
 import {movieService} from "../../services";
 import {AxiosError} from "axios";
 import {IMovieData} from "../../interfaces/movie.data";
+import {IGenre} from "../../interfaces/genre.interface";
 
 interface IState {
     movies: IMovie[];
@@ -15,7 +16,8 @@ interface IState {
     tvShows: IMovie[];
     nowPlaying: IMovie[];
     trending: IMovie[];
-    topRatedMovies:IMovie[];
+    topRatedMovies: IMovie[];
+    genresList: IGenre[];
 
 }
 
@@ -30,7 +32,8 @@ const initialState: IState = {
     tvShows: [],
     nowPlaying: [],
     trending: [],
-    topRatedMovies:[]
+    topRatedMovies: [],
+    genresList: []
 }
 
 const getMovieInfo = createAsyncThunk<IMovie, number>(
@@ -114,13 +117,26 @@ const getTrending = createAsyncThunk<IMovieData, { page: string }>(
 
 const getTopRatedMovies = createAsyncThunk<IMovieData, { page: string }>(
     'movieSlice/getTopRatedMovies',
-    async ({page}, {rejectWithValue})=>{
+    async ({page}, {rejectWithValue}) => {
         try {
             const {data} = await movieService.getTopRatedMovies(page)
             return data
-        }catch (e) {
+        } catch (e) {
             const err = e as AxiosError
-            return  rejectWithValue(err.response.data)
+            return rejectWithValue(err.response.data)
+        }
+    }
+)
+
+const getGenresList = createAsyncThunk<IGenre[], undefined>(
+    'movieSlice/getGenresList',
+    async (_, {rejectWithValue}) => {
+        try {
+            const {data: {genres}} = await movieService.getGenres();
+            return genres
+        } catch (e) {
+            const err = e as AxiosError
+            return rejectWithValue(err.response.data)
         }
     }
 )
@@ -164,11 +180,14 @@ const slice = createSlice({
                 state.page = page;
                 state.total_pages = total_pages;
             })
-            .addCase(getTopRatedMovies.fulfilled, (state, action)=>{
+            .addCase(getTopRatedMovies.fulfilled, (state, action) => {
                 const {results, page, total_pages} = action.payload;
                 state.topRatedMovies = results;
                 state.page = page;
                 state.total_pages = total_pages
+            })
+            .addCase(getGenresList.fulfilled, (state, action) => {
+                state.genresList = action.payload
             })
             .addMatcher(isPending(), state => {
                 state.loading = true
