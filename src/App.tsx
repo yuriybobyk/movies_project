@@ -1,7 +1,7 @@
 import React from 'react';
 import {Route, Routes} from "react-router-dom";
 import {MainLayout} from "./layouts/MainLayout";
-import {HomePage, MoviesPage, NewPopularPage, TvShowsPage} from "./Pages";
+import {HomePage, MoviesPage, NewPopularPage, TvShowsPage} from "./pages";
 
 
 function App() {
