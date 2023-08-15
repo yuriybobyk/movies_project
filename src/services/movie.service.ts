@@ -38,6 +38,9 @@ class MovieService {
     getGenres(): Promise<AxiosResponse> {
         return axiosService.get(`${movieEndPoints.genres}`)
     }
+    getMoviesByGenre(id:string, page:string):Promise<AxiosResponse>{
+        return axiosService.get(`${movieEndPoints.movies}`, {params:{with_genres:id, page}})
+    }
 }
 
 export const movieService = new MovieService()
