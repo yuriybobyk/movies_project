@@ -8,7 +8,9 @@ import {IGenre} from "../../interfaces/genre.interface";
 interface IState {
     movies: IMovie[];
     page: number;
+    genresPage: number
     total_pages: number;
+    total_genrePage: number
     moviesByGenre: IMovie[];
     movieInfo: IMovie;
     loading: boolean;
@@ -34,7 +36,9 @@ const initialState: IState = {
     nowPlaying: [],
     trending: [],
     topRatedMovies: [],
-    genresList: []
+    genresList: [],
+    genresPage: null,
+    total_genrePage: null
 }
 
 const getMovieInfo = createAsyncThunk<IMovie, number>(
@@ -206,8 +210,8 @@ const slice = createSlice({
             .addCase(getMoviesByGenre.fulfilled, (state, action) => {
                 const {results, page, total_pages} = action.payload;
                 state.moviesByGenre = results;
-                state.page = page;
-                state.total_pages = total_pages
+                state.genresPage = page;
+                state.total_genrePage = total_pages
             })
             .addMatcher(isPending(), state => {
                 state.loading = true

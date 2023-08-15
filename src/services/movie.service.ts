@@ -39,7 +39,7 @@ class MovieService {
         return axiosService.get(`${movieEndPoints.genres}`)
     }
     getMoviesByGenre(id:string, page:string):Promise<AxiosResponse>{
-        return axiosService.get(`${movieEndPoints.movies}`, {params:{with_genres:id, page}})
+        return axiosService.get(movieEndPoints.movies, {params:{with_genres:id, page}})
     }
 }
 
