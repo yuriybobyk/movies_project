@@ -46,16 +46,15 @@ const MovieList = () => {
                         {movies && movies.map(movie => <MovieCard key={movie.id} movie={movie}/>)}
                     </section>
                     <div className="w-full flex justify-center">
-                        <div className="flex justify-center w-[900px] ">
-                            <CustomPagination
-                                size="large"
-                                shape="rounded"
-                                variant="text"
-                                sx={{marginY: 2}}
-                                count={500}
-                                page={+page}
-                                onChange={(_, num) => setQuery({page: `${num}`})}
-                            /></div>
+                        <CustomPagination
+                            size="large"
+                            shape="rounded"
+                            variant="text"
+                            sx={{marginY: 2}}
+                            count={500}
+                            page={+page}
+                            onChange={(_, num) => setQuery({page: `${num}`})}
+                        />
                     </div>
                 </div>
             }

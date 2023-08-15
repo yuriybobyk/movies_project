@@ -146,13 +146,13 @@ const getGenresList = createAsyncThunk<IGenre[], undefined>(
     }
 )
 
-const getMoviesByGenre = createAsyncThunk<IMovieData, { genreId: string, page: string }>(
+const getMoviesByGenre = createAsyncThunk<IMovieData, {genreId:string, page:string}>(
     'movieSlice/getMoviesByGenre',
-    async ({genreId, page}, {rejectWithValue}) => {
+    async ({genreId, page}, {rejectWithValue})=>{
         try {
-            const {data} = await movieService.getMoviesByGenre(genreId, page);
+            const {data}=await movieService.getMoviesByGenre(genreId, page)
             return data
-        } catch (e) {
+        }catch (e) {
             const err = e as AxiosError
             return rejectWithValue(err.response.data)
         }

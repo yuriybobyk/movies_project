@@ -2,14 +2,14 @@ import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "../hooks";
 import {useSearchParams} from "react-router-dom";
 import {movieActions} from "../redux";
-import {MovieList} from "./MovieList";
 import {MovieCard} from "./MovieCard";
+import {Pagination, styled} from "@mui/material";
 
 const MoviesByGenre = () => {
 
     const dispatch = useAppDispatch();
 
-    const {moviesByGenre, genresPage, total_genrePage} = useAppSelector(state => state.movieReducer);
+    const {moviesByGenre, genresPage, total_genrePage, loading} = useAppSelector(state => state.movieReducer);
 
     const [params, setParams] = useSearchParams();
 
@@ -17,16 +17,50 @@ const MoviesByGenre = () => {
 
     const page = params.get('page')
 
+
     useEffect(() => {
         dispatch(movieActions.getMoviesByGenre({genreId, page}))
-    }, [genreId, page, dispatch])
+    }, [dispatch, genreId, page])
 
-    console.log(moviesByGenre)
+    const CustomPagination = styled(Pagination)(({theme}) => ({
+        '& .MuiPaginationItem-root': {
+            color: 'white',
+        },
+        '& .MuiPaginationItem-page.Mui-selected': {
+            backgroundColor: 'red',
+        },
+        '& .MuiPaginationItem-page.Mui-selected:hover': {
+            backgroundColor: 'darkred',
+        },
+        '& .MuiPaginationItem-page:hover': {
+            backgroundColor: 'lightcoral',
+        },
+    }));
 
     return (
-        <div>
-            {moviesByGenre && moviesByGenre.map(item=> <MovieCard key={item.id} movie={item}/>)}
-        </div>
+        <main className="w-full flex items-center justify-center">
+            {loading ? <div
+                    className=" absolute top-1/3 left-1/2 inline-block h-24 w-24 animate-spin rounded-full border-4 border-solid border-red-600 border-r-transparent align-[-0.125em] text-danger motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                    role="status"><span
+                    className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+                </div> :
+                <div className="flex w-full items-center justify-center p-4 flex-col">
+                    <section className="flex w-full  flex-wrap gap-3 top-24 items-center  mt-16">
+                        {moviesByGenre && moviesByGenre.map(movieByGenre => <MovieCard key={movieByGenre.id} movie={movieByGenre}/>)}
+                    </section>
+                    <div className="w-full flex justify-center">
+                        <CustomPagination
+                            size="large"
+                            shape="rounded"
+                            variant="text"
+                            sx={{marginY: 2}}
+                            count={total_genrePage < 500 ? total_genrePage : 500} page={+genresPage}
+                            onChange={(_, num) => setParams({genreId: genreId, page: `${num}`})}
+                        />
+                    </div>
+                </div>
+            }
+        </main>
     );
 };
 
