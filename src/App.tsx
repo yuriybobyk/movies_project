@@ -3,20 +3,22 @@ import {Route, Routes} from "react-router-dom";
 import {MainLayout} from "./layouts/MainLayout";
 import {HomePage, MoviesPage, NewPopularPage, TvShowsPage} from "./pages";
 import {MoviesByGenre} from "./components";
+import {LoginPage} from "./pages";
 
 
 function App() {
-  return (
-      <Routes>
+    return (
+        <Routes>
             <Route path={'/'} element={<MainLayout/>}>
                 <Route index element={<HomePage/>}/>
                 <Route path={'movies'} element={<MoviesPage/>}/>
                 <Route path={'new&popular'} element={<NewPopularPage/>}/>
                 <Route path={'tvshows'} element={<TvShowsPage/>}/>
                 <Route path={'/movies/by-genre'} element={<MoviesByGenre/>}/>
+                <Route path={'/login'} element={<LoginPage/>}/>
             </Route>
-      </Routes>
-  );
+        </Routes>
+    );
 }
 
 export default App;
