@@ -22,6 +22,7 @@ interface IState {
     genresList: IGenre[];
     thrillerMovies: IMovie[];
     comedyMovies: IMovie[];
+    familyMovies: IMovie[];
 
 
 }
@@ -42,7 +43,8 @@ const initialState: IState = {
     genresPage: null,
     total_genrePage: null,
     thrillerMovies: [],
-    comedyMovies: []
+    comedyMovies: [],
+    familyMovies: []
 
 }
 
@@ -179,16 +181,30 @@ const getThrillerMovies = createAsyncThunk<IMovieData, { page: string }>(
 )
 
 const getComedyMovies = createAsyncThunk<IMovieData, { page: string }>(
-        'movieSlice/getComedyMovies',
-    async ({page}, {rejectWithValue})=>{
-            try {
-                const genreId = '35';
-                const {data} = await movieService.getMoviesByGenre(genreId, page);
-                return data
-            }catch (e) {
-                const err = e as AxiosError;
-                return rejectWithValue(err.response.data)
-            }
+    'movieSlice/getComedyMovies',
+    async ({page}, {rejectWithValue}) => {
+        try {
+            const genreId = '35';
+            const {data} = await movieService.getMoviesByGenre(genreId, page);
+            return data
+        } catch (e) {
+            const err = e as AxiosError;
+            return rejectWithValue(err.response.data)
+        }
+    }
+)
+
+const getFamilyMovies = createAsyncThunk<IMovieData, { page: string }>(
+    'movieSlice/getFamilyMovies',
+    async ({page}, {rejectWithValue}) => {
+        try {
+            const genreId = '10751'
+            const {data} = await movieService.getMoviesByGenre(genreId, page);
+            return data;
+        } catch (e) {
+            const err = e as AxiosError;
+            return rejectWithValue(err.response.data)
+        }
     }
 )
 
@@ -253,9 +269,15 @@ const slice = createSlice({
                 state.genresPage = page;
                 state.total_genrePage = total_pages;
             })
-            .addCase(getComedyMovies.fulfilled, (state, action)=>{
+            .addCase(getComedyMovies.fulfilled, (state, action) => {
                 const {results, page, total_pages} = action.payload;
                 state.comedyMovies = results;
+                state.genresPage = page;
+                state.total_genrePage = total_pages;
+            })
+            .addCase(getFamilyMovies.fulfilled, (state, action) => {
+                const {results, page, total_pages} = action.payload;
+                state.familyMovies = results;
                 state.genresPage = page;
                 state.total_genrePage = total_pages;
             })
@@ -281,7 +303,8 @@ const movieActions = {
     getGenresList,
     getMoviesByGenre,
     getThrillerMovies,
-    getComedyMovies
+    getComedyMovies,
+    getFamilyMovies
 
 }
 

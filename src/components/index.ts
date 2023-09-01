@@ -14,3 +14,4 @@ export * from './MoviesByGenre';
 export * from './Login';
 export * from './ThrillerRow';
 export * from './ComedyRow';
+export * from './FamilyRow';
