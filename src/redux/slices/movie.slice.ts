@@ -20,6 +20,7 @@ interface IState {
     trending: IMovie[];
     topRatedMovies: IMovie[];
     genresList: IGenre[];
+    thrillerMovies: IMovie[];
 
 
 }
@@ -38,7 +39,9 @@ const initialState: IState = {
     topRatedMovies: [],
     genresList: [],
     genresPage: null,
-    total_genrePage: null
+    total_genrePage: null,
+    thrillerMovies: []
+
 }
 
 const getMovieInfo = createAsyncThunk<IMovie, number>(
@@ -146,18 +149,33 @@ const getGenresList = createAsyncThunk<IGenre[], undefined>(
     }
 )
 
-const getMoviesByGenre = createAsyncThunk<IMovieData, {genreId:string, page:string}>(
+const getMoviesByGenre = createAsyncThunk<IMovieData, { genreId: string, page: string }>(
     'movieSlice/getMoviesByGenre',
-    async ({genreId, page}, {rejectWithValue})=>{
+    async ({genreId, page}, {rejectWithValue}) => {
         try {
-            const {data}=await movieService.getMoviesByGenre(genreId, page)
+            const {data} = await movieService.getMoviesByGenre(genreId, page)
             return data
-        }catch (e) {
+        } catch (e) {
             const err = e as AxiosError
             return rejectWithValue(err.response.data)
         }
     }
 )
+
+const getThrillerMovies = createAsyncThunk<IMovieData, { page: string }>(
+    'movieSlice/getThrillerMovies',
+    async ({page}, {rejectWithValue}) => {
+        try {
+            const genreId = '53';
+            const {data} = await movieService.getMoviesByGenre(genreId, page);
+            return data
+        } catch (e) {
+            const err = e as AxiosError;
+            return rejectWithValue(err.response.data);
+        }
+    }
+)
+
 
 const slice = createSlice({
     name: 'movieSlice',
@@ -213,6 +231,12 @@ const slice = createSlice({
                 state.genresPage = page;
                 state.total_genrePage = total_pages
             })
+            .addCase(getThrillerMovies.fulfilled, (state, action)=>{
+                const { results, page, total_pages } = action.payload;
+                state.thrillerMovies = results;
+                state.genresPage = page;
+                state.total_genrePage = total_pages;
+            })
             .addMatcher(isPending(), state => {
                 state.loading = true
             })
@@ -233,7 +257,9 @@ const movieActions = {
     getTrending,
     getTopRatedMovies,
     getGenresList,
-    getMoviesByGenre
+    getMoviesByGenre,
+    getThrillerMovies
+
 }
 
 export {movieActions, movieReducer}

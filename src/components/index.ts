@@ -12,3 +12,4 @@ export * from './TopRatedRow';
 export * from './LeftMenu';
 export * from './MoviesByGenre';
 export * from './Login';
+export * from './ThrillerRow';

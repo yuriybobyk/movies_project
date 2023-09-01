@@ -1,5 +1,5 @@
 import React from 'react';
-import {Banner, NowPalyingRow, TopRatedRow, TrendingRow} from "../components";
+import {Banner, NowPalyingRow, ThrillerRow, TopRatedRow, TrendingRow} from "../components";
 
 
 
@@ -12,6 +12,7 @@ const HomePage = () => {
                     <NowPalyingRow title="Now Playing"/>
                     <TrendingRow title={"Trending Now"}/>
                     <TopRatedRow title={"Top Rated"}/>
+                    <ThrillerRow title={"Thriller Movies"}/>
                 </section>
             </main>
         </div>
