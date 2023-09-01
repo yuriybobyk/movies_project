@@ -21,6 +21,7 @@ interface IState {
     topRatedMovies: IMovie[];
     genresList: IGenre[];
     thrillerMovies: IMovie[];
+    comedyMovies: IMovie[];
 
 
 }
@@ -40,7 +41,8 @@ const initialState: IState = {
     genresList: [],
     genresPage: null,
     total_genrePage: null,
-    thrillerMovies: []
+    thrillerMovies: [],
+    comedyMovies: []
 
 }
 
@@ -176,6 +178,20 @@ const getThrillerMovies = createAsyncThunk<IMovieData, { page: string }>(
     }
 )
 
+const getComedyMovies = createAsyncThunk<IMovieData, { page: string }>(
+        'movieSlice/getComedyMovies',
+    async ({page}, {rejectWithValue})=>{
+            try {
+                const genreId = '35';
+                const {data} = await movieService.getMoviesByGenre(genreId, page);
+                return data
+            }catch (e) {
+                const err = e as AxiosError;
+                return rejectWithValue(err.response.data)
+            }
+    }
+)
+
 
 const slice = createSlice({
     name: 'movieSlice',
@@ -231,9 +247,15 @@ const slice = createSlice({
                 state.genresPage = page;
                 state.total_genrePage = total_pages
             })
-            .addCase(getThrillerMovies.fulfilled, (state, action)=>{
-                const { results, page, total_pages } = action.payload;
+            .addCase(getThrillerMovies.fulfilled, (state, action) => {
+                const {results, page, total_pages} = action.payload;
                 state.thrillerMovies = results;
+                state.genresPage = page;
+                state.total_genrePage = total_pages;
+            })
+            .addCase(getComedyMovies.fulfilled, (state, action)=>{
+                const {results, page, total_pages} = action.payload;
+                state.comedyMovies = results;
                 state.genresPage = page;
                 state.total_genrePage = total_pages;
             })
@@ -258,7 +280,8 @@ const movieActions = {
     getTopRatedMovies,
     getGenresList,
     getMoviesByGenre,
-    getThrillerMovies
+    getThrillerMovies,
+    getComedyMovies
 
 }
 
