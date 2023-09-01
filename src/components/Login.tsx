@@ -11,7 +11,7 @@ const Login = () => {
             <img
                 src="https://rb.gy/p2hphi"
                 alt="background"
-                className="absolute inset-0 z-[-10] hidden opacity-60 sm:inline object-cover"
+                className="absolute -z-10 hidden opacity-60 sm:inline object-cover"
             />
 
             <img
@@ -23,7 +23,7 @@ const Login = () => {
             />
 
             <form
-                className="relative mt-24 space-y-8 rounded bg-black/75 py-10 px-6 md:mt-0 md:max-w-md md:px-14"
+                className="relative mt-24 space-y-8 rounded bg-black/75 py-10 px-6 md:mt-0 md:max-w-md lg:mx-auto lg:max-w-[450px]"
             >
                 <h1 className="text-4xl font-semibold">Sign In</h1>
                 <div className="space-y-4">
