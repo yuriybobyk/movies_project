@@ -5,6 +5,7 @@ import App from './App';
 import {setupStore} from "./redux";
 import {Provider} from "react-redux";
 import {BrowserRouter} from "react-router-dom";
+import {AuthProvider} from "./hooks";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -12,11 +13,15 @@ const root = ReactDOM.createRoot(
 
 const store = setupStore()
 root.render(
+
     <Provider store={store}>
         <BrowserRouter>
+            <AuthProvider>
             <App/>
+            </AuthProvider>
         </BrowserRouter>
     </Provider>
+
 );
 
 
