@@ -12,13 +12,19 @@ interface Inputs {
 const Login = () => {
     const [login, setLogin] = useState(false)
     const { signIn, signUp } = useAuth()
-    const {register, handleSubmit, formState: {errors}} = useForm<Inputs>()
-    const onSubmit: SubmitHandler<Inputs>= async ({email, password})=>{
-            if(login){
-                await signIn(email, password)
-            }else {
-                await signUp(email, password)
-            }
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<Inputs>()
+
+    const onSubmit: SubmitHandler<Inputs> = async ({ email, password }) => {
+        if (login) {
+            await signIn(email, password)
+        } else {
+            await signUp(email, password)
+        }
     }
 
     return (
@@ -38,8 +44,9 @@ const Login = () => {
                 height={150}
             />
 
-            <form onSubmit={handleSubmit(onSubmit)}
-                  className="relative mt-24 space-y-8 rounded bg-black/75 py-10 px-6 md:mt-0 md:max-w-md lg:mx-auto lg:max-w-[450px]"
+            <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="relative mt-24 space-y-8 rounded bg-black/75 py-10 px-6 md:mt-0 md:max-w-md md:px-14"
             >
                 <h1 className="text-4xl font-semibold">Sign In</h1>
                 <div className="space-y-4">
@@ -48,7 +55,7 @@ const Login = () => {
                             type="email"
                             placeholder="Email"
                             className="input"
-                            {...register('email', {required: true})}
+                            {...register('email', { required: true })}
                         />
                         {errors.email && (
                             <p className="p-1 text-[13px] font-light  text-orange-500">
@@ -61,7 +68,7 @@ const Login = () => {
                             type="password"
                             placeholder="Password"
                             className="input"
-                            {...register('password', {required: true})}
+                            {...register('password', { required: true })}
                         />
                         {errors.password && (
                             <p className="p-1 text-[13px] font-light  text-orange-500">
@@ -72,9 +79,8 @@ const Login = () => {
                 </div>
 
                 <button
-                    type="submit"
                     className="w-full rounded bg-[#e50914] py-3 font-semibold"
-                    onClick={()=>setLogin(true)}
+                    onClick={() => setLogin(true)}
                 >
                     Sign In
                 </button>
@@ -82,9 +88,9 @@ const Login = () => {
                 <div className="text-[gray]">
                     New to Netflix?{' '}
                     <button
-                        type="button"
+                        type="submit"
                         className="text-white hover:underline"
-                        onClick={()=>setLogin(false)}
+                        onClick={() => setLogin(false)}
                     >
                         Sign up now
                     </button>

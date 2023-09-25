@@ -30,7 +30,7 @@ function App() {
                             path={"/movies/by-genre"}
                             element={<MoviesByGenre />}
                         />
-                        <Route path={"/login"} element={<LoginPage />} />
+                        <Route path={"/login"} element={<LoginPage/>}/>
                     </Route>
                 </Routes>
             )}
