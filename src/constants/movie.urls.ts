@@ -11,7 +11,8 @@ const movieEndPoints = {
     tv: '/discover/tv',
     nowPlaying: '/movie/now_playing',
     topRated: 'movie/top_rated',
-    genres: '/genre/movie/list'
+    genres: '/genre/movie/list',
+    search: '/search/movie'
 }
 
 export {baseMovieURL, movieEndPoints, posterURL, backDropURL}
