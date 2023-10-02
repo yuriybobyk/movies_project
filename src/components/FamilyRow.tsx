@@ -3,6 +3,7 @@ import {useAppDispatch, useAppSelector} from "../hooks";
 import {movieActions} from "../redux";
 import {ChevronLeftIcon, ChevronRightIcon} from "@heroicons/react/outline";
 import {RowElement} from "./RowElement";
+import {MovieModal} from "./MovieModal";
 
 interface IProps{
     title: string
@@ -24,11 +25,20 @@ const FamilyRow = ({title}:IProps) => {
 
     const dispatch = useAppDispatch();
 
-    const {familyMovies} = useAppSelector(state => state.movieReducer)
+    const {familyMovies, isModalOpen} = useAppSelector(state => state.movieReducer)
 
     useEffect(()=>{
         dispatch(movieActions.getFamilyMovies({page:'2'}))
     },[dispatch])
+
+    const handleMovieCardClick = (movieId: number) => {
+        dispatch(movieActions.openModal());
+        dispatch(movieActions.getMovieInfo(movieId))
+    };
+
+    const handleModalClose = () => {
+        dispatch(movieActions.closeModal());
+    };
 
     return (
         <div className="h-80 space-y-0.5 md:space-y-2">
@@ -39,13 +49,16 @@ const FamilyRow = ({title}:IProps) => {
                 }`}
                                  onClick={()=>handleCkick('left')}/>
                 <div ref={rowRef} className="flex items-center space-x-0.5 overflow-x-scroll scrollbar-hide md:space-x-2.5 md:p-2">
-                    {familyMovies&& familyMovies.map(familyMovie=><RowElement movie={familyMovie} key={familyMovie.id}/>)}
+                    {familyMovies&& familyMovies.map(familyMovie=><RowElement onCardClick={handleMovieCardClick} movie={familyMovie} key={familyMovie.id}/>)}
                 </div>
                 <ChevronRightIcon
                     className={`absolute top-0 bottom-0 right-2 z-40 m-auto h-9 w-9 cursor-pointer opacity-0 transition hover:scale-125 group-hover:opacity-100`}
                     onClick={() => handleCkick('right')}
                 />
             </div>
+            {isModalOpen && (
+                <MovieModal onClose={handleModalClose}/>
+            )}
         </div>
     );
 };

@@ -10,7 +10,6 @@ interface IProps {
 
 const MovieCard: FC<IProps> = ({movie, onCardClick}) => {
     const handleCardClick = () => {
-        console.log('Card click')
     onCardClick(movie.id);
     }
 

@@ -4,6 +4,7 @@ import {useSearchParams} from "react-router-dom";
 import {movieActions} from "../redux";
 import {MovieCard} from "./MovieCard";
 import {Pagination, styled} from "@mui/material";
+import {MovieModal} from "./MovieModal";
 
 const TvShows = () => {
 
@@ -53,7 +54,8 @@ const TvShows = () => {
                 </div> :
                 <div className="flex w-full items-center justify-center p-4 flex-col">
                     <section className="flex w-full  flex-wrap gap-3 top-24 items-center  mt-16">
-                        {tvShows && tvShows.map(tvShow => <MovieCard onCardClick={handleMovieCardClick} movie={tvShow} key={tvShow.id}/>)}
+                        {tvShows && tvShows.map(tvShow => <MovieCard onCardClick={handleMovieCardClick} movie={tvShow}
+                                                                     key={tvShow.id}/>)}
                     </section>
                     <div className="w-full flex justify-center">
                         <div className="flex justify-center w-[900px] ">
@@ -69,6 +71,9 @@ const TvShows = () => {
                     </div>
                 </div>
             }
+            {isModalOpen && (
+                <MovieModal onClose={handleModalClose}/>
+            )}
         </main>
     );
 };

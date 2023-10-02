@@ -5,12 +5,13 @@ import {backDropURL} from "../constants";
 import {IMovie} from "../interfaces/movie.interface";
 import {FaPlay} from "react-icons/fa";
 import {InformationCircleIcon} from "@heroicons/react/solid";
+import {MovieModal} from "./MovieModal";
 
 
 const Banner = () => {
     const [movie, setMovie] = useState<IMovie | null>(null)
 
-    const {movies} = useAppSelector(state => state.movieReducer)
+    const {movies, isModalOpen} = useAppSelector(state => state.movieReducer)
 
     const dispatch = useAppDispatch()
 
@@ -26,6 +27,15 @@ const Banner = () => {
         }
     }, [movies])
 
+    const handleMovieCardClick = (movieId: number) => {
+        dispatch(movieActions.openModal());
+        dispatch(movieActions.getMovieInfo(movieId));
+    };
+
+    const handleModalClose = () => {
+        dispatch(movieActions.closeModal())
+    }
+
     return (
         <div>
             {movie && (
@@ -40,10 +50,16 @@ const Banner = () => {
                         {movie?.overview}
                     </p>
                     <div className="flex space-x-3">
-                        <button className="bannerButton bg-white text-black"><FaPlay className="h-4 w-4 text-black md:h-7 md:w-7 "/></button>
-                        <button className="bannerButton bg-[gray]/70">More Info <InformationCircleIcon className="h-5 w-5 md:h-8 md:w-8"/></button>
+                        <button className="bannerButton bg-white text-black"><FaPlay
+                            className="h-4 w-4 text-black md:h-7 md:w-7 "/></button>
+                        <button className="bannerButton bg-[gray]/70"
+                                onClick={() => handleMovieCardClick(movie.id)}>More Info <InformationCircleIcon
+                            className="h-5 w-5 md:h-8 md:w-8"/></button>
                     </div>
                 </div>
+            )}
+            {isModalOpen && (
+                <MovieModal onClose={handleModalClose}/>
             )}
         </div>
     );

@@ -15,6 +15,7 @@ export interface IMovie {
     poster_path: string
     vote_average: number
     vote_count: number
+    video: boolean
 }
 
 

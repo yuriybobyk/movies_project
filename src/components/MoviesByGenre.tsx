@@ -4,6 +4,7 @@ import {useSearchParams} from "react-router-dom";
 import {movieActions} from "../redux";
 import {MovieCard} from "./MovieCard";
 import {Pagination, styled} from "@mui/material";
+import {MovieModal} from "./MovieModal";
 
 const MoviesByGenre = () => {
 
@@ -69,6 +70,9 @@ const MoviesByGenre = () => {
                     </div>
                 </div>
             }
+            {isModalOpen && (
+                <MovieModal onClose={handleModalClose} />
+            )}
         </main>
     );
 };
