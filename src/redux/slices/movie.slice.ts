@@ -1,5 +1,5 @@
 import {IMovie} from "../../interfaces/movie.interface";
-import {createAsyncThunk, createSlice, isFulfilled, isPending} from "@reduxjs/toolkit";
+import {createAction, createAsyncThunk, createSlice, isFulfilled, isPending} from "@reduxjs/toolkit";
 import {movieService} from "../../services";
 import {AxiosError} from "axios";
 import {IMovieData} from "../../interfaces/movie.data";
@@ -24,6 +24,8 @@ interface IState {
     comedyMovies: IMovie[];
     familyMovies: IMovie[];
     searchMovies: IMovie[];
+    isModalOpen: boolean;
+    modalMovie: null;
 
 
 }
@@ -46,7 +48,9 @@ const initialState: IState = {
     thrillerMovies: [],
     comedyMovies: [],
     familyMovies: [],
-    searchMovies: []
+    searchMovies: [],
+    isModalOpen: false,
+    modalMovie: null
 
 }
 
@@ -223,6 +227,9 @@ const searchMovies = createAsyncThunk<IMovieData, { query: string; page: string 
     }
 )
 
+const openModal = createAction<void>('movieSlice/openModal');
+const closeModal = createAction<void>('movieSlice/closeModal')
+
 
 const slice = createSlice({
     name: 'movieSlice',
@@ -302,6 +309,14 @@ const slice = createSlice({
                 state.page = page;
                 state.total_pages = total_pages;
             })
+            .addCase(openModal, (state, action) => {
+                state.isModalOpen = true;
+                state.modalMovie = null;
+            })
+            .addCase(closeModal, (state, action) => {
+                state.isModalOpen = false;
+                state.modalMovie = null;
+            })
             .addMatcher(isPending(), state => {
                 state.loading = true
             })
@@ -327,7 +342,9 @@ const movieActions = {
     getThrillerMovies,
     getComedyMovies,
     getFamilyMovies,
-    searchMovies
+    searchMovies,
+    openModal,
+    closeModal
 
 }
 
