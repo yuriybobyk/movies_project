@@ -4,10 +4,11 @@ import {useSearchParams} from "react-router-dom";
 import {movieActions} from "../redux";
 import {MovieCard} from "./MovieCard";
 import {Pagination, styled} from "@mui/material";
+import {MovieModal} from "./MovieModal";
 
 const MovieList = () => {
 
-    const {movies, page, loading} = useAppSelector(state => state.movieReducer)
+    const {movies, page, loading, isModalOpen} = useAppSelector(state => state.movieReducer)
     const [query, setQuery] = useSearchParams()
 
     const choosenPage = query.get('page')
@@ -16,7 +17,16 @@ const MovieList = () => {
 
     useEffect(() => {
         dispatch(movieActions.getMovies({page: choosenPage}))
-    }, [dispatch, choosenPage])
+    }, [dispatch, choosenPage]);
+
+    const handleMovieCardClick = (movieId: number) => {
+        dispatch(movieActions.openModal());
+        dispatch(movieActions.getMovieInfo(movieId));
+    };
+
+    const handleModalClose = () => {
+        dispatch(movieActions.closeModal())
+    }
 
 
     const CustomPagination = styled(Pagination)(({theme}) => ({
@@ -36,28 +46,41 @@ const MovieList = () => {
 
     return (
         <main className="w-full flex items-center justify-center">
-            {loading ? <div
+            {loading ? (
+                <div
                     className=" absolute top-1/3 left-1/2 inline-block h-24 w-24 animate-spin rounded-full border-4 border-solid border-red-600 border-r-transparent align-[-0.125em] text-danger motion-reduce:animate-[spin_1.5s_linear_infinite]"
                     role="status"><span
                     className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
-                </div> :
+                </div>
+                ) : (
                 <div className="flex w-full items-center justify-center p-4 flex-col">
                     <section className="flex w-full  flex-wrap gap-3 top-24 items-center  mt-16">
-                        {movies && movies.map(movie => <MovieCard key={movie.id} movie={movie}/>)}
+                        {movies &&
+                            movies.map((movie) => (
+                                <MovieCard
+                                    key={movie.id}
+                                    movie={movie}
+                                    onCardClick={handleMovieCardClick} // Pass the click handler
+                                />
+                            ))}
                     </section>
                     <div className="w-full flex justify-center">
                         <CustomPagination
                             size="large"
                             shape="rounded"
                             variant="text"
-                            sx={{marginY: 2}}
+                            sx={{ marginY: 2 }}
                             count={500}
                             page={+page}
-                            onChange={(_, num) => setQuery({page: `${num}`})}
+                            onChange={(_, num) => setQuery({ page: `${num}` })}
                         />
                     </div>
                 </div>
-            }
+                )}
+
+            {isModalOpen && (
+                <MovieModal onClose={handleModalClose} />
+            )}
         </main>
     );
 };

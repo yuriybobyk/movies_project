@@ -9,7 +9,7 @@ const TvShows = () => {
 
     const dispatch = useAppDispatch();
 
-    const {tvShows, loading, page} = useAppSelector(state => state.movieReducer);
+    const {tvShows, loading, page, isModalOpen} = useAppSelector(state => state.movieReducer);
 
     const [query, setQuery] = useSearchParams();
 
@@ -17,7 +17,16 @@ const TvShows = () => {
 
     useEffect(() => {
         dispatch(movieActions.getTvShows({page: choosenPage}))
-    }, [dispatch, choosenPage])
+    }, [dispatch, choosenPage]);
+
+    const handleMovieCardClick = (movieId: number) => {
+        dispatch(movieActions.openModal());
+        dispatch(movieActions.getMovieInfo(movieId))
+    };
+
+    const handleModalClose = () => {
+        dispatch(movieActions.closeModal());
+    };
 
     const CustomPagination = styled(Pagination)(({theme}) => ({
         '& .MuiPaginationItem-root': {
@@ -44,7 +53,7 @@ const TvShows = () => {
                 </div> :
                 <div className="flex w-full items-center justify-center p-4 flex-col">
                     <section className="flex w-full  flex-wrap gap-3 top-24 items-center  mt-16">
-                        {tvShows && tvShows.map(tvShow => <MovieCard movie={tvShow} key={tvShow.id}/>)}
+                        {tvShows && tvShows.map(tvShow => <MovieCard onCardClick={handleMovieCardClick} movie={tvShow} key={tvShow.id}/>)}
                     </section>
                     <div className="w-full flex justify-center">
                         <div className="flex justify-center w-[900px] ">

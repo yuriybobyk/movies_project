@@ -25,7 +25,7 @@ interface IState {
     familyMovies: IMovie[];
     searchMovies: IMovie[];
     isModalOpen: boolean;
-    modalMovie: null;
+    modalMovie: null | IMovie
 
 
 }
@@ -238,7 +238,10 @@ const slice = createSlice({
     extraReducers: builder =>
         builder
             .addCase(getMovieInfo.fulfilled, (state, action) => {
-                state.movieInfo = action.payload
+                state.modalMovie = action.payload
+            })
+            .addCase(getMovieInfo.rejected, state => {
+                state.modalMovie = null
             })
             .addCase(getMovies.fulfilled, (state, action) => {
                 const {results, page, total_pages} = action.payload;

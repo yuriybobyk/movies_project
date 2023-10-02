@@ -9,7 +9,7 @@ const MoviesByGenre = () => {
 
     const dispatch = useAppDispatch();
 
-    const {moviesByGenre, genresPage, total_genrePage, loading} = useAppSelector(state => state.movieReducer);
+    const {moviesByGenre, genresPage, total_genrePage, loading, isModalOpen} = useAppSelector(state => state.movieReducer);
 
     const [params, setParams] = useSearchParams();
 
@@ -20,7 +20,16 @@ const MoviesByGenre = () => {
 
     useEffect(() => {
         dispatch(movieActions.getMoviesByGenre({genreId, page}))
-    }, [dispatch, genreId, page])
+    }, [dispatch, genreId, page]);
+
+    const handleMovieCardClick = (movieId: number) => {
+        dispatch(movieActions.openModal());
+        dispatch(movieActions.getMovieInfo(movieId))
+    };
+
+    const handleModalClose = () => {
+        dispatch(movieActions.closeModal());
+    };
 
     const CustomPagination = styled(Pagination)(({theme}) => ({
         '& .MuiPaginationItem-root': {
@@ -46,7 +55,7 @@ const MoviesByGenre = () => {
                 </div> :
                 <div className="flex w-full items-center justify-center p-4 flex-col">
                     <section className="flex w-full  flex-wrap gap-3 top-24 items-center  mt-16">
-                        {moviesByGenre && moviesByGenre.map(movieByGenre => <MovieCard key={movieByGenre.id} movie={movieByGenre}/>)}
+                        {moviesByGenre && moviesByGenre.map(movieByGenre => <MovieCard onCardClick={handleMovieCardClick} key={movieByGenre.id} movie={movieByGenre}/>)}
                     </section>
                     <div className="w-full flex justify-center">
                         <CustomPagination

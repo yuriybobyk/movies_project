@@ -10,7 +10,7 @@ const NewPopular = () => {
 
     const dispatch = useAppDispatch();
 
-    const {newPopularMovies, page, loading} = useAppSelector(state => state.movieReducer);
+    const {newPopularMovies, page, loading, isModalOpen} = useAppSelector(state => state.movieReducer);
 
     const [query, setQuery] = useSearchParams();
 
@@ -19,7 +19,16 @@ const NewPopular = () => {
     useEffect(() => {
         dispatch(movieActions.getNewPopular({page: choosenPage}))
 
-    }, [dispatch, choosenPage])
+    }, [dispatch, choosenPage]);
+
+    const handleMovieCardClick = (movieId: number) => {
+        dispatch(movieActions.openModal());
+        dispatch(movieActions.getMovieInfo(movieId))
+    };
+
+    const handleModalClose = () => {
+        dispatch(movieActions.closeModal());
+    };
 
     const CustomPagination = styled(Pagination)(({theme}) => ({
         '& .MuiPaginationItem-root': {
@@ -46,7 +55,7 @@ const NewPopular = () => {
                 </div> :
                 <div className="flex w-full items-center justify-center p-4 flex-col">
                     <section className="flex w-full  flex-wrap gap-3 top-24 items-center  mt-16">
-                        {newPopularMovies && newPopularMovies.map(newPopular => <MovieCard key={newPopular.id}
+                        {newPopularMovies && newPopularMovies.map(newPopular => <MovieCard onCardClick={handleMovieCardClick} key={newPopular.id}
                                                                                            movie={newPopular}/>)}
                     </section>
                     <div className="w-full flex justify-center">

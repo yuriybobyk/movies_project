@@ -16,3 +16,4 @@ export * from './ThrillerRow';
 export * from './ComedyRow';
 export * from './FamilyRow';
 export * from './Animation';
+export * from './MovieModal';
