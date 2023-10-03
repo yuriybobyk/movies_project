@@ -1,9 +1,6 @@
-// MovieModal.tsx
-
 import React from 'react';
 import { useAppSelector } from '../hooks';
 import { Dialog, DialogContent, Typography, Button } from '@mui/material';
-import { movieActions } from '../redux';
 import {posterURL} from "../constants";
 
 interface MovieModalProps {

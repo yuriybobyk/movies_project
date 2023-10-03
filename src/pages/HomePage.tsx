@@ -1,5 +1,15 @@
 import React from 'react';
-import {Banner, ComedyRow, FamilyRow, NowPalyingRow, ThrillerRow, TopRatedRow, TrendingRow} from "../components";
+import {
+    Banner,
+    ComedyRow,
+    FamilyRow,
+    MovieModal,
+    NowPalyingRow,
+    ThrillerRow,
+    TopRatedRow,
+    TrendingRow
+} from "../components";
+import {useAppSelector} from "../hooks";
 
 const HomePage = () => {
 
