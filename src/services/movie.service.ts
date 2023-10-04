@@ -44,6 +44,9 @@ class MovieService {
     searchMovies(query:string, page:string):Promise<AxiosResponse<IMovieData>>{
         return axiosService.get(`${movieEndPoints.search}`, {params:{query, page}})
     }
+    getTrailer(id:number):Promise<AxiosResponse>{
+        return axiosService.get(`${movieEndPoints.movieInfo}/${id}/videos`);
+    }
 }
 
 export const movieService = new MovieService()
