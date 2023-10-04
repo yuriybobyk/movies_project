@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "../hooks";
-import {useSearchParams} from "react-router-dom";
+import {useLocation, useSearchParams} from "react-router-dom";
 import {movieActions} from "../redux";
 import {MovieCard} from "./MovieCard";
 import {Pagination, styled} from "@mui/material";
@@ -10,7 +10,7 @@ const TvShows = () => {
 
     const dispatch = useAppDispatch();
 
-    const {tvShows, loading, page, isModalOpen} = useAppSelector(state => state.movieReducer);
+    const {tvShows, loading, page, isModalOpen, trailer} = useAppSelector(state => state.movieReducer);
 
     const [query, setQuery] = useSearchParams();
 
@@ -23,6 +23,7 @@ const TvShows = () => {
     const handleMovieCardClick = (movieId: number) => {
         dispatch(movieActions.openModal());
         dispatch(movieActions.getMovieInfo(movieId))
+        dispatch(movieActions.getTrailer(movieId))
     };
 
     const handleModalClose = () => {
@@ -72,7 +73,7 @@ const TvShows = () => {
                 </div>
             }
             {isModalOpen && (
-                <MovieModal onClose={handleModalClose}/>
+                <MovieModal onClose={handleModalClose} trailer={trailer}/>
             )}
         </main>
     );

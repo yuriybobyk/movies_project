@@ -4,6 +4,7 @@ import {movieActions} from "../redux";
 import {ChevronLeftIcon, ChevronRightIcon} from "@heroicons/react/outline";
 import {RowElement} from "./RowElement";
 import {MovieModal} from "./MovieModal";
+import {useLocation} from "react-router-dom";
 
 interface IProps {
     title: string
@@ -25,7 +26,7 @@ const TopRatedRow = ({title}: IProps) => {
 
     const dispatch = useAppDispatch();
 
-    const {topRatedMovies, isModalOpen} = useAppSelector(state => state.movieReducer)
+    const {topRatedMovies, isModalOpen, trailer} = useAppSelector(state => state.movieReducer)
 
     useEffect(() => {
         dispatch(movieActions.getTopRatedMovies({page: '1'}))
@@ -34,6 +35,7 @@ const TopRatedRow = ({title}: IProps) => {
     const handleMovieCardClick = (movieId: number) => {
         dispatch(movieActions.openModal());
         dispatch(movieActions.getMovieInfo(movieId))
+        dispatch(movieActions.getTrailer(movieId))
     };
 
     const handleModalClose = () => {
@@ -60,7 +62,7 @@ const TopRatedRow = ({title}: IProps) => {
                 />
             </div>
             {isModalOpen && (
-                <MovieModal onClose={handleModalClose}/>
+                <MovieModal onClose={handleModalClose} trailer={trailer}/>
             )}
         </div>
     );

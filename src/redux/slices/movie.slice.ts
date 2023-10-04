@@ -4,6 +4,7 @@ import {movieService} from "../../services";
 import {AxiosError} from "axios";
 import {IMovieData} from "../../interfaces/movie.data";
 import {IGenre} from "../../interfaces/genre.interface";
+import {ITrailer} from "../../interfaces";
 
 interface IState {
     movies: IMovie[];
@@ -25,7 +26,8 @@ interface IState {
     familyMovies: IMovie[];
     searchMovies: IMovie[];
     isModalOpen: boolean;
-    modalMovie: null | IMovie
+    modalMovie: null | IMovie;
+    trailer: ITrailer;
 
 
 }
@@ -50,7 +52,8 @@ const initialState: IState = {
     familyMovies: [],
     searchMovies: [],
     isModalOpen: false,
-    modalMovie: null
+    modalMovie: null,
+    trailer: null
 
 }
 
@@ -227,6 +230,19 @@ const searchMovies = createAsyncThunk<IMovieData, { query: string; page: string 
     }
 )
 
+const getTrailer = createAsyncThunk<ITrailer, number>(
+    'movieSlice/getTrailer',
+    async (id, {rejectWithValue}) => {
+        try {
+            const {data} = await movieService.getTrailer(id);
+            return data
+        }catch (e) {
+            const err = e as AxiosError
+            return rejectWithValue(err.response.data)
+        }
+    }
+)
+
 const openModal = createAction<void>('movieSlice/openModal');
 const closeModal = createAction<void>('movieSlice/closeModal')
 
@@ -320,6 +336,9 @@ const slice = createSlice({
                 state.isModalOpen = false;
                 state.modalMovie = null;
             })
+            .addCase(getTrailer.fulfilled, (state, action)=>{
+                state.trailer = action.payload
+            })
             .addMatcher(isPending(), state => {
                 state.loading = true
             })
@@ -347,7 +366,8 @@ const movieActions = {
     getFamilyMovies,
     searchMovies,
     openModal,
-    closeModal
+    closeModal,
+    getTrailer
 
 }
 

@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {IMovie} from "../interfaces/movie.interface";
+import {IMovie} from "../interfaces";
 import {posterURL} from "../constants";
 
 interface IProps {

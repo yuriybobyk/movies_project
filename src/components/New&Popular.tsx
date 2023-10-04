@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "../hooks";
-import {useSearchParams} from "react-router-dom";
+import {useLocation, useSearchParams} from "react-router-dom";
 import {movieActions} from "../redux";
 import {MovieCard} from "./MovieCard";
 import {Pagination, styled} from "@mui/material";
@@ -11,7 +11,7 @@ const NewPopular = () => {
 
     const dispatch = useAppDispatch();
 
-    const {newPopularMovies, page, loading, isModalOpen} = useAppSelector(state => state.movieReducer);
+    const {newPopularMovies, page, loading, isModalOpen, trailer} = useAppSelector(state => state.movieReducer);
 
     const [query, setQuery] = useSearchParams();
 
@@ -19,12 +19,12 @@ const NewPopular = () => {
 
     useEffect(() => {
         dispatch(movieActions.getNewPopular({page: choosenPage}))
-
     }, [dispatch, choosenPage]);
 
     const handleMovieCardClick = (movieId: number) => {
         dispatch(movieActions.openModal());
         dispatch(movieActions.getMovieInfo(movieId))
+        dispatch(movieActions.getTrailer(movieId))
     };
 
     const handleModalClose = () => {
@@ -56,8 +56,9 @@ const NewPopular = () => {
                 </div> :
                 <div className="flex w-full items-center justify-center p-4 flex-col">
                     <section className="flex w-full  flex-wrap gap-3 top-24 items-center  mt-16">
-                        {newPopularMovies && newPopularMovies.map(newPopular => <MovieCard onCardClick={handleMovieCardClick} key={newPopular.id}
-                                                                                           movie={newPopular}/>)}
+                        {newPopularMovies && newPopularMovies.map(newPopular => <MovieCard
+                            onCardClick={handleMovieCardClick} key={newPopular.id}
+                            movie={newPopular}/>)}
                     </section>
                     <div className="w-full flex justify-center">
                         <div className="flex justify-center w-[900px] ">
@@ -74,7 +75,7 @@ const NewPopular = () => {
                 </div>
             }
             {isModalOpen && (
-                <MovieModal onClose={handleModalClose} />
+                <MovieModal onClose={handleModalClose} trailer={trailer}/>
             )}
         </main>
     );

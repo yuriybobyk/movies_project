@@ -6,18 +6,18 @@ import {IMovie} from "../interfaces/movie.interface";
 import {FaPlay} from "react-icons/fa";
 import {InformationCircleIcon} from "@heroicons/react/solid";
 import {MovieModal} from "./MovieModal";
+import {useLocation} from "react-router-dom";
 
 
 const Banner = () => {
     const [movie, setMovie] = useState<IMovie | null>(null)
 
-    const {movies, isModalOpen} = useAppSelector(state => state.movieReducer)
+    const {movies, isModalOpen, trailer} = useAppSelector(state => state.movieReducer)
 
     const dispatch = useAppDispatch()
 
     useEffect(() => {
         dispatch(movieActions.getMovies({page: '1'}));
-
     }, [dispatch])
 
     useEffect(() => {
@@ -30,6 +30,7 @@ const Banner = () => {
     const handleMovieCardClick = (movieId: number) => {
         dispatch(movieActions.openModal());
         dispatch(movieActions.getMovieInfo(movieId));
+        dispatch(movieActions.getTrailer(movieId))
     };
 
     const handleModalClose = () => {
@@ -58,7 +59,7 @@ const Banner = () => {
                     </div>
                 </div>
             )}
-            {isModalOpen && <MovieModal onClose={handleModalClose}/>}
+            {isModalOpen && <MovieModal onClose={handleModalClose} trailer={trailer}/>}
         </main>
     );
 };

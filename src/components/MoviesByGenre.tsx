@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "../hooks";
-import {useSearchParams} from "react-router-dom";
+import {useLocation, useSearchParams} from "react-router-dom";
 import {movieActions} from "../redux";
 import {MovieCard} from "./MovieCard";
 import {Pagination, styled} from "@mui/material";
@@ -10,14 +10,20 @@ const MoviesByGenre = () => {
 
     const dispatch = useAppDispatch();
 
-    const {moviesByGenre, genresPage, total_genrePage, loading, isModalOpen} = useAppSelector(state => state.movieReducer);
+    const {
+        moviesByGenre,
+        genresPage,
+        total_genrePage,
+        loading,
+        isModalOpen,
+        trailer
+    } = useAppSelector(state => state.movieReducer);
 
     const [params, setParams] = useSearchParams();
 
     const genreId = params.get('genreId');
 
     const page = params.get('page')
-
 
     useEffect(() => {
         dispatch(movieActions.getMoviesByGenre({genreId, page}))
@@ -26,6 +32,7 @@ const MoviesByGenre = () => {
     const handleMovieCardClick = (movieId: number) => {
         dispatch(movieActions.openModal());
         dispatch(movieActions.getMovieInfo(movieId))
+        dispatch(movieActions.getTrailer(movieId))
     };
 
     const handleModalClose = () => {
@@ -56,7 +63,8 @@ const MoviesByGenre = () => {
                 </div> :
                 <div className="flex w-full items-center justify-center p-4 flex-col">
                     <section className="flex w-full  flex-wrap gap-3 top-24 items-center  mt-16">
-                        {moviesByGenre && moviesByGenre.map(movieByGenre => <MovieCard onCardClick={handleMovieCardClick} key={movieByGenre.id} movie={movieByGenre}/>)}
+                        {moviesByGenre && moviesByGenre.map(movieByGenre => <MovieCard
+                            onCardClick={handleMovieCardClick} key={movieByGenre.id} movie={movieByGenre}/>)}
                     </section>
                     <div className="w-full flex justify-center">
                         <CustomPagination
@@ -71,7 +79,7 @@ const MoviesByGenre = () => {
                 </div>
             }
             {isModalOpen && (
-                <MovieModal onClose={handleModalClose} />
+                <MovieModal onClose={handleModalClose} trailer={trailer}/>
             )}
         </main>
     );

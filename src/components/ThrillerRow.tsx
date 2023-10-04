@@ -4,6 +4,7 @@ import {ChevronLeftIcon, ChevronRightIcon} from "@heroicons/react/outline";
 import {RowElement} from "./RowElement";
 import {movieActions} from "../redux";
 import {MovieModal} from "./MovieModal";
+import {useLocation} from "react-router-dom";
 
 interface IProps {
     title: string
@@ -25,7 +26,7 @@ const ThrillerRow = ({title}: IProps) => {
 
     const dispatch = useAppDispatch();
 
-    const {thrillerMovies, isModalOpen} = useAppSelector(state => state.movieReducer)
+    const {thrillerMovies, isModalOpen, trailer} = useAppSelector(state => state.movieReducer)
 
     useEffect(() => {
         dispatch(movieActions.getThrillerMovies({page: '1'}))
@@ -34,6 +35,7 @@ const ThrillerRow = ({title}: IProps) => {
     const handleMovieCardClick = (movieId: number) => {
         dispatch(movieActions.openModal());
         dispatch(movieActions.getMovieInfo(movieId))
+        dispatch(movieActions.getTrailer(movieId))
     };
 
     const handleModalClose = () => {
@@ -51,8 +53,9 @@ const ThrillerRow = ({title}: IProps) => {
                     onClick={() => handleCkick('left')}/>
                 <div ref={rowRef}
                      className="flex items-center space-x-0.5 overflow-x-scroll scrollbar-hide md:space-x-2.5 md:p-2">
-                    {thrillerMovies && thrillerMovies.map(thrillerMovie => <RowElement onCardClick={handleMovieCardClick} movie={thrillerMovie}
-                                                                                       key={thrillerMovie.id}/>)}
+                    {thrillerMovies && thrillerMovies.map(thrillerMovie => <RowElement
+                        onCardClick={handleMovieCardClick} movie={thrillerMovie}
+                        key={thrillerMovie.id}/>)}
                 </div>
                 <ChevronRightIcon
                     className={`absolute top-0 bottom-0 right-2 z-40 m-auto h-9 w-9 cursor-pointer opacity-0 transition hover:scale-125 group-hover:opacity-100`}
@@ -60,7 +63,7 @@ const ThrillerRow = ({title}: IProps) => {
                 />
             </div>
             {isModalOpen && (
-                <MovieModal onClose={handleModalClose} />
+                <MovieModal onClose={handleModalClose} trailer={trailer}/>
             )}
         </div>
     );
