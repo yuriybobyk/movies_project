@@ -1,9 +1,9 @@
 import React from 'react';
 import { useAppSelector } from '../hooks';
 import { Dialog, DialogContent, Typography, Button } from '@mui/material';
-import { posterURL } from "../constants";
-import { ITrailer } from "../interfaces";
-import YouTube from "react-youtube";
+import { posterURL } from '../constants';
+import { ITrailer } from '../interfaces';
+import ReactPlayer from 'react-player';
 
 interface MovieModalProps {
     onClose: () => void;
@@ -14,9 +14,11 @@ const MovieModal: React.FC<MovieModalProps> = ({ onClose, trailer }) => {
     const modalMovie = useAppSelector((state) => state.movieReducer.modalMovie);
 
     if (!modalMovie) {
-        // Handle the case when modalMovie is null
-        return null; // or any other desired behavior
+        return null;
     }
+    const trailerType = trailer.results.find(
+        (video) => video.type === 'Trailer'
+    );
 
     return (
         <Dialog open={true} onClose={onClose}>
@@ -25,24 +27,21 @@ const MovieModal: React.FC<MovieModalProps> = ({ onClose, trailer }) => {
                     <Typography variant="h5" gutterBottom>
                         {modalMovie.title}
                     </Typography>
-                    <img
-                        src={`${posterURL}${modalMovie.poster_path}`}
-                        alt={modalMovie.title}
-                    />
+                    <img src={`${posterURL}${modalMovie.poster_path}`} alt={modalMovie.title} />
                     <Typography variant="body1" paragraph>
                         {modalMovie.overview}
                     </Typography>
                     <Typography variant="body2">
                         Release Date: {modalMovie.release_date}
                     </Typography>
-                    <div>
-                        {trailer?.results[0] && (
-                            <YouTube
-                                videoId={trailer.results[0].key}
-                                opts={{ width: 1150, height: 550 }}
-                            />
-                        )}
-                    </div>
+                    {trailerType && (
+                        <ReactPlayer
+                            url={`https://www.youtube.com/watch?v=${trailerType.key}`}
+                            width="100%"
+                            height="550px"
+                            autoPlay={false}
+                        />
+                    )}
                     <Button onClick={onClose}>Close</Button>
                 </div>
             </DialogContent>

@@ -3,13 +3,12 @@ import {
     Banner,
     ComedyRow,
     FamilyRow,
-    MovieModal,
     NowPalyingRow,
     ThrillerRow,
     TopRatedRow,
     TrendingRow
 } from "../components";
-import {useAppSelector} from "../hooks";
+
 
 const HomePage = () => {
 
