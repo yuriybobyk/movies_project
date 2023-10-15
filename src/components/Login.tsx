@@ -33,7 +33,7 @@ const Login = () => {
             <img
                 src="https://rb.gy/p2hphi"
                 alt="background"
-                className="absolute -z-10 hidden opacity-60 sm:inline object-cover"
+                className="absolute -z-10 hidden w-full h-full opacity-60 sm:inline object-cover"
             />
 
             <img

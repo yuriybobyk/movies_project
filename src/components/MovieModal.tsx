@@ -16,6 +16,7 @@ const MovieModal: React.FC<MovieModalProps> = ({ onClose, trailer }) => {
     if (!modalMovie) {
         return null;
     }
+
     const trailerType = trailer.results.find(
         (video) => video.type === 'Trailer'
     );
