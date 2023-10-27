@@ -1,9 +1,9 @@
-import {IMovie} from "../../interfaces/movie.interface";
+import {IMovie} from "../../interfaces";
 import {createAction, createAsyncThunk, createSlice, isFulfilled, isPending} from "@reduxjs/toolkit";
 import {movieService} from "../../services";
 import {AxiosError} from "axios";
-import {IMovieData} from "../../interfaces/movie.data";
-import {IGenre} from "../../interfaces/genre.interface";
+import {IMovieData} from "../../interfaces";
+import {IGenre} from "../../interfaces";
 import {ITrailer} from "../../interfaces";
 
 interface IState {
