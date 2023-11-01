@@ -14,6 +14,7 @@ interface MovieModalProps {
 const MovieModal: React.FC<MovieModalProps> = ({onClose, trailer}) => {
     const modalMovie = useAppSelector((state) => state.movieReducer.modalMovie);
     const [muted, setMuted] = useState(false);
+    const [play, setPlay] = useState(false);
 
     if (!modalMovie) {
         return null;
@@ -40,14 +41,14 @@ const MovieModal: React.FC<MovieModalProps> = ({onClose, trailer}) => {
                             width="100%"
                             height="100%"
                             style={{position: 'absolute', top: '0', left: '0'}}
-                            autoPlay={false}
+                            playing={play}
                             muted={muted}
                         />
                     )}
                     <div className="absolute bottom-10 flex w-full items-center justify-between px-10">
                         <div className="flex space-x-2">
-                            <button className="flex items-center gap-x-2 rounded bg-white px-8 text-xl font-bold text-black transition hover:bg-[#e6e6e6]">
-                                <FaPlay/>
+                            <button className="flex items-center gap-x-2 rounded bg-white px-8 text-xl font-bold text-black transition hover:bg-[#e6e6e6]" onClick={()=>setPlay(!play)}>
+                                <FaPlay className="h-7 w-7 text-black"/>
                                 Play
                             </button>
                             <button className="modalButton">
