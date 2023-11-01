@@ -4,7 +4,7 @@ import {movieActions} from "../redux";
 import {ChevronLeftIcon, ChevronRightIcon} from "@heroicons/react/outline";
 import {RowElement} from "./RowElement";
 import {MovieModal} from "./MovieModal";
-import {useLocation} from "react-router-dom";
+
 
 interface IProps {
     title: string
