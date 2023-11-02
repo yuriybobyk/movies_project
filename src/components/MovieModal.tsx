@@ -20,10 +20,13 @@ const MovieModal: React.FC<MovieModalProps> = ({onClose, trailer}) => {
         return null;
     }
 
+
     const trailerType = trailer && trailer.results.find(
         (video) => video.type === 'Trailer'
     );
 
+    
+    const voteAverage = modalMovie!.vote_average*10;
     return (
         <MuiModal open={true} onClose={onClose}
                   className="fixed !top-7 left-0 right-0 z-50 mx-auto w-full max-w-5xl overflow-hidden overflow-y-scroll rounded-md scrollbar-hide">
@@ -68,6 +71,24 @@ const MovieModal: React.FC<MovieModalProps> = ({onClose, trailer}) => {
                                     <VolumeUpIcon className="h-6 w-6"/>
                                 )}
                             </button>
+                    </div>
+                </div>
+                <div className="flex space-x-16 rounded-b-md bg-[#181818] px-10 py-8">
+                    <div className="space-y-6 text-lg">
+                        <div className="flex items-center space-x-2 text-sm">
+                            <p className="font-semibold text-green-400">{Math.floor(voteAverage)}% Match</p>
+                            <p className="font-light">{modalMovie?.release_date || modalMovie.first_air_date}</p>
+                            <div className="flex h-4 items-center justify-center rounded border border-white/40 px-1.5 text-xs">HD</div>
+                        </div>
+                        <div>
+                            <p className="w-5/6">{modalMovie?.overview}</p>
+                            <div className="flex flex-col space-y-3 text-sm">
+                            <div>
+                                <span className="text-[gray]">Genres: </span>
+                                {modalMovie.genres.map((genre)=>genre.name).join(', ')}
+                            </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </>
