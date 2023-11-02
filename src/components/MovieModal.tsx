@@ -3,7 +3,7 @@ import {useAppSelector} from '../hooks';
 import {ITrailer} from '../interfaces';
 import MuiModal from '@mui/material/Modal'
 import ReactPlayer from 'react-player';
-import {PlusIcon, VolumeOffIcon, VolumeUpIcon, XIcon} from "@heroicons/react/solid";
+import {PlusIcon, ThumbUpIcon, VolumeOffIcon, VolumeUpIcon, XIcon} from "@heroicons/react/solid";
 import { FaPause, FaPlay } from 'react-icons/fa';
 
 interface MovieModalProps {
@@ -57,14 +57,17 @@ const MovieModal: React.FC<MovieModalProps> = ({onClose, trailer}) => {
                             <button className="modalButton">
                                 <PlusIcon className="h-7 w-7"/>
                             </button>
-                            <button className="modalButton" onClick={()=> setMuted(!muted)}>
+                            <button className="modalButton">
+                                <ThumbUpIcon className="h-7 w-7"/>
+                            </button>
+                        </div>
+                        <button className="modalButton" onClick={()=> setMuted(!muted)}>
                                 {muted? (
                                     <VolumeOffIcon className="h-6 w-6"/>
                                 ): (
                                     <VolumeUpIcon className="h-6 w-6"/>
                                 )}
                             </button>
-                        </div>
                     </div>
                 </div>
             </>
