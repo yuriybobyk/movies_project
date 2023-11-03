@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Menu} from "./Menu";
 import {BellIcon, MenuIcon, SearchIcon} from "@heroicons/react/solid";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {LeftMenu} from "./LeftMenu";
 import useAuth from "../hooks/useAuth";
 
@@ -11,6 +11,7 @@ const Header = () => {
     const [isScrolled, setIsScrolled] = useState(false)
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const {logout} = useAuth()
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
         const handleScroll = () => {
@@ -36,6 +37,15 @@ const Header = () => {
         setIsMenuOpen(false)
     }
 
+    const navigate = useNavigate();
+
+    const handleSearch = ()=>{
+        if(searchQuery){
+            navigate(`/search/${searchQuery}`)
+        }
+    }
+
+
     return (
         <header className={`${isScrolled && 'bg-[#141414]'}`}>
             <div className="flex items-center space-x-2 md: space-x-10">
@@ -57,7 +67,8 @@ const Header = () => {
                 </ul>
             </div>
             <div className="flex items-center space-x-4 text-sm font-light">
-                <SearchIcon className="hidden h-6 w-6 sm:inline"/>
+                <input className="font-black text-black" type="text" value={searchQuery} onChange={(e)=> setSearchQuery(e.target.value)} placeholder="Type here to find movies"/>
+                <SearchIcon onClick={handleSearch} className="hidden h-6 w-6 sm:inline"/>
                 <p className="hidden lg: inline">Kids</p>
                 <BellIcon className="h-6 w-6"/>
                 {/*<Link to={'/account'}>*/}

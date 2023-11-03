@@ -28,6 +28,8 @@ interface IState {
     isModalOpen: boolean;
     modalMovie: null | IMovie;
     trailer: ITrailer;
+    searchPage: number;
+    total_searchPage:number;
 
 
 }
@@ -53,7 +55,9 @@ const initialState: IState = {
     searchMovies: [],
     isModalOpen: false,
     modalMovie: null,
-    trailer: null
+    trailer: null,
+    searchPage: null,
+    total_searchPage: null
 
 }
 
@@ -325,8 +329,8 @@ const slice = createSlice({
             .addCase(searchMovies.fulfilled, (state, action) => {
                 const {results, page, total_pages} = action.payload;
                 state.searchMovies = results;
-                state.page = page;
-                state.total_pages = total_pages;
+                state.searchPage = page;
+                state.total_searchPage = total_pages;
             })
             .addCase(openModal, (state, action) => {
                 state.isModalOpen = true;

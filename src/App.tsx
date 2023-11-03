@@ -5,6 +5,7 @@ import { MoviesByGenre } from "./components";
 import { LoginPage } from "./pages";
 import Animation from "./components/Animation";
 import {useState} from "react";
+import SearchResult from "./components/SearchResult";
 
 function App() {
     const [animationVisible, setAnimationVisible] = useState(true);
@@ -31,6 +32,7 @@ function App() {
                             element={<MoviesByGenre />}
                         />
                         <Route path={"/login"} element={<LoginPage/>}/>
+                        <Route path="/search/:query" element={<SearchResult/>}/>
                     </Route>
                 </Routes>
             )}
