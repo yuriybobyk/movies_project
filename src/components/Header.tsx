@@ -12,6 +12,7 @@ const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const {logout} = useAuth()
     const [searchQuery, setSearchQuery] = useState('');
+    const [isSearching, setIsSearching] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -40,11 +41,18 @@ const Header = () => {
     const navigate = useNavigate();
 
     const handleSearch = ()=>{
-        if(searchQuery){
-            navigate(`/search/${searchQuery}`)
+        if(!isSearching){
+            setIsSearching(true);
+        }else{
+            if(searchQuery){
+                navigate(`/search/${searchQuery}`)
+                setSearchQuery('')
+            }
+            setIsSearching(false)
         }
     }
-
+        
+    
 
     return (
         <header className={`${isScrolled && 'bg-[#141414]'}`}>
@@ -67,8 +75,10 @@ const Header = () => {
                 </ul>
             </div>
             <div className="flex items-center space-x-4 text-sm font-light">
-                <input className="font-black text-black" type="text" value={searchQuery} onChange={(e)=> setSearchQuery(e.target.value)} placeholder="Type here to find movies"/>
-                <SearchIcon onClick={handleSearch} className="hidden h-6 w-6 sm:inline"/>
+                {isSearching && (
+                    <input className="font-black text-black border-solid " type="text" value={searchQuery} onChange={(e)=> setSearchQuery(e.target.value)} placeholder="type here to find movies" onKeyPress={(e)=>{if(e.key === 'Enter'){handleSearch()}}}/>
+                )}
+                <SearchIcon onClick={handleSearch} className="h-6 w-6 sm:inline cursor-pointer"/>
                 <p className="hidden lg: inline">Kids</p>
                 <BellIcon className="h-6 w-6"/>
                 {/*<Link to={'/account'}>*/}
