@@ -6,7 +6,6 @@ import {IMovie} from "../interfaces/movie.interface";
 import {FaPlay} from "react-icons/fa";
 import {InformationCircleIcon} from "@heroicons/react/solid";
 import {MovieModal} from "./MovieModal";
-import {useLocation} from "react-router-dom";
 
 
 const Banner = () => {

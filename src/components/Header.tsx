@@ -64,7 +64,9 @@ const Header = () => {
                 <img src="https://rb.gy/ulxxee"
                      width={100}
                      height={100}
-                     className="cursor-pointer object-contain" alt={'netflix'}/>
+                     className="cursor-pointer object-contain" alt={'netflix'}
+                     onClick={()=>navigate('/')}
+                     />
                 <Menu/>
                 <ul className="hidden space-x-4 md:flex">
                     <Link to={'/'} className="headerLink">Home</Link>
@@ -76,7 +78,7 @@ const Header = () => {
             </div>
             <div className="flex items-center space-x-4 text-sm font-light">
                 {isSearching && (
-                    <input className="font-black text-black border-solid " type="text" value={searchQuery} onChange={(e)=> setSearchQuery(e.target.value)} placeholder="type here to find movies" onKeyPress={(e)=>{if(e.key === 'Enter'){handleSearch()}}}/>
+                    <input className="text-[#e5e5e5] border-solid outline-[#e5e5e5] px-2 py-1 bg-inherit border placeholder:text-slate-100 md:w-40 sm:w-8 m-0 text-xs" type="text" value={searchQuery} onChange={(e)=> setSearchQuery(e.target.value)} placeholder="type here to find movies"  onKeyPress={(e)=>{if(e.key === 'Enter'){handleSearch()}}} />
                 )}
                 <SearchIcon onClick={handleSearch} className="h-6 w-6 sm:inline cursor-pointer"/>
                 <p className="hidden lg: inline">Kids</p>
