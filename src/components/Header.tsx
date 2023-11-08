@@ -56,7 +56,7 @@ const Header = () => {
 
     return (
         <header className={`${isScrolled && 'bg-[#141414]'}`}>
-            <div className="flex items-center space-x-2 md: space-x-10">
+            <div className="flex items-center space-x-2 md:space-x-10">
                 {isMenuOpen ? <div>
                         <div className="w-8 h-8"/>
                         <LeftMenu isOpen={isMenuOpen} onClose={closeMenu}/></div> :
@@ -78,7 +78,7 @@ const Header = () => {
             </div>
             <div className="flex items-center space-x-4 text-sm font-light">
                 {isSearching && (
-                    <input className="text-[#e5e5e5] border-solid outline-[#e5e5e5] px-2 py-1 bg-inherit border placeholder:text-slate-100 md:w-40 sm:w-8 m-0 text-xs" type="text" value={searchQuery} onChange={(e)=> setSearchQuery(e.target.value)} placeholder="type here to find movies"  onKeyPress={(e)=>{if(e.key === 'Enter'){handleSearch()}}} />
+                    <input className="text-[#e5e5e5] border-solid outline-[#e5e5e5] px-2 py-1 bg-inherit border transition duration-700 placeholder:text-slate-100 md:w-40 sm:w-8 m-0 text-xs" type="text" value={searchQuery} onChange={(e)=> setSearchQuery(e.target.value)} placeholder="type here to find movies"  onKeyPress={(e)=>{if(e.key === 'Enter'){handleSearch()}}} />
                 )}
                 <SearchIcon onClick={handleSearch} className="h-6 w-6 sm:inline cursor-pointer"/>
                 <p className="hidden lg: inline">Kids</p>
