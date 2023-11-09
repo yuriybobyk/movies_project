@@ -1,5 +1,5 @@
 export * from './Header';
-export * from './Menu';
+export * from './HeaderMenu';
 export * from './Banner';
 export * from './New&Popular';
 export * from './MovieCard';

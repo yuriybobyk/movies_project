@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {Menu} from "./Menu";
 import {BellIcon, MenuIcon, SearchIcon} from "@heroicons/react/solid";
 import {Link, useNavigate} from "react-router-dom";
 import {LeftMenu} from "./LeftMenu";
+import {HeaderMenu} from "./HeaderMenu";
 
 
 
@@ -66,7 +66,7 @@ const Header = () => {
                      className="cursor-pointer object-contain" alt={'netflix'}
                      onClick={()=>navigate('/')}
                      />
-                <Menu/>
+                <HeaderMenu/>
                 <ul className="hidden space-x-4 md:flex">
                     <Link to={'/'} className="headerLink">Home</Link>
                     <Link to={'/tvshows'} className="headerLink">TV Shows</Link>
