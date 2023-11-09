@@ -1,6 +1,6 @@
 import { Route, Routes} from "react-router-dom";
 import { MainLayout } from "./layouts/MainLayout";
-import { HomePage, MoviesPage, NewPopularPage, TvShowsPage } from "./pages";
+import { AccountPage, HomePage, MoviesPage, NewPopularPage, TvShowsPage } from "./pages";
 import { MoviesByGenre } from "./components";
 import { LoginPage } from "./pages";
 import Animation from "./components/Animation";
@@ -33,6 +33,7 @@ function App() {
                         />
                         <Route path={"/login"} element={<LoginPage/>}/>
                         <Route path="/search/:query" element={<SearchResult/>}/>
+                        <Route path="/account" element={<AccountPage/>}/>
                     </Route>
                 </Routes>
             )}

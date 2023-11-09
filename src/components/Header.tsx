@@ -3,14 +3,13 @@ import {Menu} from "./Menu";
 import {BellIcon, MenuIcon, SearchIcon} from "@heroicons/react/solid";
 import {Link, useNavigate} from "react-router-dom";
 import {LeftMenu} from "./LeftMenu";
-import useAuth from "../hooks/useAuth";
+
 
 
 const Header = () => {
 
     const [isScrolled, setIsScrolled] = useState(false)
     const [isMenuOpen, setIsMenuOpen] = useState(false)
-    const {logout} = useAuth()
     const [searchQuery, setSearchQuery] = useState('');
     const [isSearching, setIsSearching] = useState(false);
 
@@ -56,7 +55,7 @@ const Header = () => {
 
     return (
         <header className={`${isScrolled && 'bg-[#141414]'}`}>
-            <div className="flex items-center space-x-2 md:space-x-10">
+            <div className="flex items-center space-x-1 md:space-x-4">
                 {isMenuOpen ? <div>
                         <div className="w-8 h-8"/>
                         <LeftMenu isOpen={isMenuOpen} onClose={closeMenu}/></div> :
@@ -83,14 +82,12 @@ const Header = () => {
                 <SearchIcon onClick={handleSearch} className="h-6 w-6 sm:inline cursor-pointer"/>
                 <p className="hidden lg: inline">Kids</p>
                 <BellIcon className="h-6 w-6"/>
-                {/*<Link to={'/account'}>*/}
+                <Link to={'/account'}>
                     <img src="https://rb.gy/g1pwyx"
                          alt=""
                          className="cursor-pointer rounded"
-                        onClick={logout}
                     />
-
-                {/*</Link>*/}
+                </Link>
             </div>
         </header>
     );

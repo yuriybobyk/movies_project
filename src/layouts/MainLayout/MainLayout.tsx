@@ -6,7 +6,7 @@ const MainLayout = () => {
 
     const location = useLocation();
 
-    const routesWithoutHeader = ['/login'];
+    const routesWithoutHeader = ['/login', '/account'];
 
     const hideHeader = routesWithoutHeader.includes(location.pathname);
 

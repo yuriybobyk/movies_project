@@ -60,7 +60,7 @@ const Banner = () => {
 
     useEffect(() => {
         const handleScroll = () => {
-            if (window.scrollY > 0) {
+            if (window.scrollY > 260) {
                 setIsStopped(true);
             } if(window.scrollY === 0){
                 setIsStopped(false);
